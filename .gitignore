@@ -1,0 +1,8 @@
+# Build files and directories
+target/
+out/
+*.class
+
+# InteliJ specific files
+.idea/
+*.iml
