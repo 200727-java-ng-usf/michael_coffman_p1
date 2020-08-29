@@ -68,43 +68,42 @@ CREATE TABLE ers_users(
 
 CREATE TABLE ers_reimbursement_statuses(
 	reimb_status_id			serial,
-	reimb_status			varchar(10) NOT NULL,
+	reimb_status			varchar(10) UNIQUE NOT NULL,
 	
 	CONSTRAINT ers_reimbursement_statuses_pk
-	PRIMARY KEY (reimb_status_id),
-	
-	-- WIP keys	(?)
-	
+	PRIMARY KEY (reimb_status_id)
 );
 
 CREATE TABLE ers_reimbursement_types(
 	reimb_type_id			serial,
-	reimb_type				varchar(10) NOT NULL,
+	reimb_type				varchar(10) UNIQUE NOT NULL,
 	
 	CONSTRAINT ers_reimbursement_types_pk
-	PRIMARY KEY (reimb_type_id),
-	
-	-- WIP keys (?)
-	
+	PRIMARY KEY (reimb_type_id)
 );
 
 CREATE TABLE ers_user_roles(
 	role_id					serial,
-	role_name				varchar(10) NOT NULL,
+	role_name				varchar(10) UNIQUE NOT NULL,
 	
 	CONSTRAINT ers_user_roles_pk
-	PRIMARY KEY (role_id),
-	
-	-- WIP keys (?)
-	
+	PRIMARY KEY (role_id)
 );
 
 -- Inserting CONSTANTS into ers_user_roles
-INSERT INTO ers_user_roles
-	VALUES (('ADMIN'), 				-- 1
-			('FINANCE MANAGER'),	-- 2
-			('EMPLOYEE'));			-- 3
+INSERT INTO ers_user_roles (role_name)
+	VALUES ('ADMIN'), ('MANAGER'), ('EMPLOYEE');		
 
+INSERT INTO ers_reimbursement_types (reimb_type)
+	VALUES ('LODGING'), ('TRAVEL'), ('FOOD'), ('OTHER');
 
+INSERT INTO ers_reimbursement_statuses (reimb_status) 
+	VALUES ('PENDING'), ('APPROVED'), ('DENIED');
 
+SELECT * FROM ers_reimbursements;
+SELECT * FROM ers_users;
+SELECT * FROM ers_reimbursement_statuses;
+SELECT * FROM ers_reimbursement_types;
+SELECT * FROM ers_user_roles;
 
+COMMIT;
