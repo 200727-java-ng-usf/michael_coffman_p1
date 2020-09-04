@@ -7,4 +7,18 @@
         <welcome-file>splash.html</welcome-file>
     </welcome-file-list>
 
+
+<!--    &lt;!&ndash; FORWARDING MASTER SERVLET &ndash;&gt;-->
+<!--    <servlet>-->
+<!--        <servlet-name>MasterServlet</servlet-name>-->
+<!--        <servlet-class>com.revature.servlets.MasterServlet</servlet-class>-->
+<!--    </servlet>-->
+
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>MasterServlet</servlet-name>-->
+<!--        <url-pattern>/admin</url-pattern>-->
+<!--    </servlet-mapping>-->
+
+
+
 </web-app>

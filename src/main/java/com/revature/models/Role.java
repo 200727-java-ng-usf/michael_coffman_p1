@@ -10,9 +10,9 @@ import java.util.Optional;
  */
 public enum Role {
 
-    ADMIN("Admin"),
-    MANAGER("Manager"),
-    EMPLOYEE("Employee");
+    ADMIN("ADMIN"),
+    MANAGER("MANAGER"),
+    EMPLOYEE("EMPLOYEE");
 
     private String roleName;
 
@@ -21,10 +21,11 @@ public enum Role {
         this.roleName = roleName;
     }
 
-    public static Optional<Role> getRoleName(String name) {
+    public static Role getRoleName(String name) {
         return Arrays.stream(Role.values())
                 .filter(role -> role.roleName.equals(name))
-                .findFirst();
+                .findFirst()
+                .orElse(EMPLOYEE);
     }
 
     @Override
