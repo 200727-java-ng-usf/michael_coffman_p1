@@ -8,17 +8,20 @@
     </welcome-file-list>
 
 
-<!--    &lt;!&ndash; FORWARDING MASTER SERVLET &ndash;&gt;-->
-<!--    <servlet>-->
-<!--        <servlet-name>MasterServlet</servlet-name>-->
-<!--        <servlet-class>com.revature.servlets.MasterServlet</servlet-class>-->
-<!--    </servlet>-->
+    <!-- FORWARDING MASTER SERVLET -->
+    <servlet>
+        <servlet-name>MasterServlet</servlet-name>
+        <servlet-class>com.revature.servlets.MasterServlet</servlet-class>
+    </servlet>
 
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>MasterServlet</servlet-name>-->
+    <servlet-mapping>
+        <servlet-name>MasterServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
 <!--        <url-pattern>/admin</url-pattern>-->
-<!--    </servlet-mapping>-->
-
+<!--        <url-pattern>/manager</url-pattern>-->
+<!--        <url-pattern>/employee</url-pattern>-->
+<!--        <url-pattern>/badlogin</url-pattern>-->
+    </servlet-mapping>
 
 
 </web-app>

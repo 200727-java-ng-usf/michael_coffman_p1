@@ -9,10 +9,10 @@ public class RequestHelper {
     public static String process(HttpServletRequest req) {
 
         switch(req.getRequestURI()) {
-            case "/project1/html/admin.html":
+            case "/project1/login":
                 return LoginController.login(req);
             default:
-                return "/html/splash.html";
+                return "/project1/admin.html";
         }
     }
 

@@ -7,7 +7,7 @@ TO project1_user;
 
 COMMIT;
 
--- Convienent Drop Tables to Reset Spot
+-- Convienent Drop Tables Spot
 --DROP TABLE ers_reimbursements;
 --DROP TABLE ers_users;
 --DROP TABLE ers_reimbursement_statuses;
