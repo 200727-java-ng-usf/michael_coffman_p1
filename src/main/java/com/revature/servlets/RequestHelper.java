@@ -15,6 +15,7 @@ public class RequestHelper {
                 //TODO Implement custom bad URI request page to redirect to
                 return "/project1/login";
         }
+
     }
 
 }

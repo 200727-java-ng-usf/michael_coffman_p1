@@ -15,7 +15,7 @@ public class LoginController {
 
     public static String login(HttpServletRequest req) {
 
-        // Making sure method is a POST http method
+        // Making sure method isn't a POST http method
         if (!req.getMethod().equals("POST")) {
             return "/html/login.html";
         }
