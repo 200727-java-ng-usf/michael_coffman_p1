@@ -7,7 +7,7 @@ TO project1_user;
 
 COMMIT;
 
--- Convienent Drop Tables to Reset Spot
+-- Convienent Drop Tables Spot
 --DROP TABLE ers_reimbursements;
 --DROP TABLE ers_users;
 --DROP TABLE ers_reimbursement_statuses;
@@ -18,7 +18,7 @@ COMMIT;
 -- Creating TABLES
 
 CREATE TABLE ers_reimbursements(
-	reimb_id				serial,
+	reimb_id				serial NOT NULL,
 	amount					numeric(6,2) DEFAULT 0.00 NOT NULL,
 	submitted				timestamp NOT NULL,
 	resolved				timestamp NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE ers_reimbursements(
 );
 
 CREATE TABLE ers_users(
-	ers_user_id				serial,
+	ers_user_id				serial NOT NULL,
 	username				varchar(25) NOT NULL,
 	password				varchar(256) NOT NULL,
 	first_name				varchar(25) NOT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE ers_users(
 );
 
 CREATE TABLE ers_reimbursement_statuses(
-	reimb_status_id			serial,
+	reimb_status_id			serial NOT NULL,
 	reimb_status			varchar(10) UNIQUE NOT NULL,
 	
 	CONSTRAINT ers_reimbursement_statuses_pk
@@ -75,7 +75,7 @@ CREATE TABLE ers_reimbursement_statuses(
 );
 
 CREATE TABLE ers_reimbursement_types(
-	reimb_type_id			serial,
+	reimb_type_id			serial NOT NULL,
 	reimb_type				varchar(10) UNIQUE NOT NULL,
 	
 	CONSTRAINT ers_reimbursement_types_pk
@@ -83,7 +83,7 @@ CREATE TABLE ers_reimbursement_types(
 );
 
 CREATE TABLE ers_user_roles(
-	role_id					serial,
+	role_id					serial NOT NULL,
 	role_name				varchar(10) UNIQUE NOT NULL,
 	
 	CONSTRAINT ers_user_roles_pk
@@ -105,5 +105,9 @@ SELECT * FROM ers_users;
 SELECT * FROM ers_reimbursement_statuses;
 SELECT * FROM ers_reimbursement_types;
 SELECT * FROM ers_user_roles;
+
+-- Inserting initial Admin user
+INSERT INTO ers_users 
+	VALUES (1, 'mcoffma04', 'adminpass', 'Michael', 'Coffman', 'michael.coffman@revature.net', 1);
 
 COMMIT;
