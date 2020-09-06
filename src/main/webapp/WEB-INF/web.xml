@@ -16,11 +16,12 @@
 
     <servlet-mapping>
         <servlet-name>MasterServlet</servlet-name>
+        <url-pattern>/api/*</url-pattern>
         <url-pattern>/login</url-pattern>
-<!--        <url-pattern>/admin</url-pattern>-->
-<!--        <url-pattern>/manager</url-pattern>-->
-<!--        <url-pattern>/employee</url-pattern>-->
-<!--        <url-pattern>/badlogin</url-pattern>-->
+        <url-pattern>/admin</url-pattern>
+        <url-pattern>/manager</url-pattern>
+        <url-pattern>/employee</url-pattern>
+        <url-pattern>/badlogin</url-pattern>
     </servlet-mapping>
 
 

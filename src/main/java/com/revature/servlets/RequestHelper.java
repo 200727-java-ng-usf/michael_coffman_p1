@@ -12,7 +12,8 @@ public class RequestHelper {
             case "/project1/login":
                 return LoginController.login(req);
             default:
-                return "/project1/admin.html";
+                //TODO Implement custom bad URI request page to redirect to
+                return "/project1/login";
         }
     }
 

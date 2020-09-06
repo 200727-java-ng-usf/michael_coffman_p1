@@ -6,6 +6,7 @@ import com.revature.models.Role;
 import com.revature.services.LoginService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 public class LoginController {
 
@@ -15,7 +16,7 @@ public class LoginController {
     public static String login(HttpServletRequest req) {
 
         // Making sure method is a POST http method
-        if (!req.getMethod().equals("post")) {
+        if (!req.getMethod().equals("POST")) {
             return "/html/login.html";
         }
 
@@ -23,13 +24,13 @@ public class LoginController {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        AppUser loggedUser = logService.authenticate(username, password);
+        Optional<AppUser> loggedUser = logService.authenticate(username, password);
 
 
-        if (loggedUser != null) {
+        if (loggedUser.isPresent()) {
 
-            Role role = loggedUser.getRole();
-            username = loggedUser.getUsername();
+            Role role = loggedUser.get().getRole();
+            username = loggedUser.get().getUsername();
 
             req.getSession().setAttribute("Name", username);
             req.getSession().setAttribute("Role", role);
@@ -38,14 +39,13 @@ public class LoginController {
                 case ADMIN:
                     return "/html/admin.html";
                 case MANAGER:
-                    return "/api/manager";
+                    return "/html/manager.html";
                 case EMPLOYEE:
-                    return "/api/employee";
+                    return "/html/employee.html";
             }
         }
 
         return "/html/badlogin.html";
-
 
     }
 }
