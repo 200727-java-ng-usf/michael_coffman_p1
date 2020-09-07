@@ -4,7 +4,7 @@
     <display-name>Reva-Reimbursements</display-name>
 
     <welcome-file-list>
-        <welcome-file>splash.html</welcome-file>
+        <welcome-file>/html/login.html</welcome-file>
     </welcome-file-list>
 
 
@@ -16,14 +16,7 @@
 
     <servlet-mapping>
         <servlet-name>MasterServlet</servlet-name>
-
         <url-pattern>/api/*</url-pattern>
-
-        <url-pattern>/login</url-pattern>
-
-        <url-pattern>/newuser</url-pattern>
-
-
     </servlet-mapping>
 
 
