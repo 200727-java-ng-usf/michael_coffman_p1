@@ -15,11 +15,6 @@ public class LoginController {
 
     public static String login(HttpServletRequest req) {
 
-        // Making sure method isn't a POST http method
-        if (!req.getMethod().equals("POST")) {
-            return "/html/login.html";
-        }
-
         // Get Login Info
         String username = req.getParameter("username");
         String password = req.getParameter("password");
@@ -37,11 +32,11 @@ public class LoginController {
 
             switch(role) {
                 case ADMIN:
-                    return "/html/admin.html";
+                    return "/html/admin/adminmain.html";
                 case MANAGER:
-                    return "/html/manager.html";
+                    return "/html/manager/managermain.html";
                 case EMPLOYEE:
-                    return "/html/employee.html";
+                    return "/html/employee/employeemain.html";
             }
         }
 
