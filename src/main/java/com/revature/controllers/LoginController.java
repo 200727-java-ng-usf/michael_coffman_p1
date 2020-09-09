@@ -5,6 +5,7 @@ import com.revature.models.AppUser;
 import com.revature.models.Role;
 import com.revature.services.LoginService;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
@@ -26,9 +27,11 @@ public class LoginController {
 
             Role role = loggedUser.get().getRole();
             username = loggedUser.get().getUsername();
+            int id = loggedUser.get().getId();
 
             req.getSession().setAttribute("Name", username);
             req.getSession().setAttribute("Role", role);
+            req.getSession().setAttribute("Id", id);
 
             switch(role) {
                 case ADMIN:

@@ -11,17 +11,16 @@ public class RequestHelper {
     public static String process(HttpServletRequest req) throws IOException {
 
         switch(req.getRequestURI()) {
-            case "/project1/api/login":
+            case "/project1/main/login":
                 return LoginController.login(req);
 
-
-            case "/project1/api/newuser":
+            case "/project1/main/newuser":
                 return AdminAddUserController.registerUser(req);
 
 
             default:
                 //TODO Implement custom bad URI request page to redirect to
-                return "/project1/login";
+                return "/project1/main/login";
         }
 
     }

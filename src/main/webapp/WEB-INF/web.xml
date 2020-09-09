@@ -8,16 +8,4 @@
     </welcome-file-list>
 
 
-    <!-- FORWARDING MASTER SERVLET -->
-    <servlet>
-        <servlet-name>MasterServlet</servlet-name>
-        <servlet-class>com.revature.servlets.MasterServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>MasterServlet</servlet-name>
-        <url-pattern>/api/*</url-pattern>
-    </servlet-mapping>
-
-
 </web-app>
