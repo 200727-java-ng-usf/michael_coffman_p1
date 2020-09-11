@@ -12,22 +12,27 @@ public class DashboardHelperServlet {
 
     public String process(HttpServletRequest req) throws IOException {
 
+        ObjectMapper mapper = new ObjectMapper();
+
         HttpSession session = req.getSession();
-        Principal principal = (Principal) session.getAttribute("principal");
+
+        String principalJSON = (String) req.getSession().getAttribute("principal");
+        Principal principal = mapper.readValue(principalJSON, Principal.class);
         String userRole = principal.getRole();
 
         switch (userRole) {
             case "ADMIN":
-                return "admin.html";
+                System.out.println("redirecting to admin.html");
+                return "/admin.html";
 
             case "MANAGER":
-                return "manager.html";
+                return "/manager.html";
 
             case "EMPLOYEE":
-                return "employee.html";
+                return "/employee.html";
 
             default:
-                return "badlogin.html";
+                return "/badlogin.html";
         }
 
 

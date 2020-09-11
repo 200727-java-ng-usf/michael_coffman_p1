@@ -25,6 +25,12 @@ public class LoginServlet extends HttpServlet {
     private final LoginService logService = new LoginService();
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getSession().invalidate();
+        resp.setStatus(204);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         // JSON -> JAVA language mapper
@@ -49,24 +55,6 @@ public class LoginServlet extends HttpServlet {
 
             resp.setStatus(204);
 
-
-
-//            switch (role) {
-//                case "ADMIN":
-//                    System.out.println("Admin User Detected");
-//                    //resp.sendRedirect("/project1/admin.html");
-//                    req.getRequestDispatcher("/admin").forward(req, resp);
-//                    break;
-//                case "MANAGER":
-//                    //resp.sendRedirect("/project1/html/manager.html");
-//                    break;
-//                case "EMPLOYEE":
-//                    //resp.sendRedirect("/project1/html/employee.html");
-//                    break;
-//                default:
-//                    //resp.sendRedirect("/project1/html/badlogin.html");
-//                    break;
-//            }
 
         } catch (AuthenticationException | InvalidRequestException e) {
 
