@@ -18,7 +18,7 @@ public class ConnectionFactory {
     private ConnectionFactory() {
         super();
         try {
-//            properties.load(new FileReader("src/main/resources/application.properties"));
+//
               properties.load(getClass().getClassLoader().getResourceAsStream("application.properties"));
 
         } catch (Exception e) {
@@ -64,7 +64,7 @@ public class ConnectionFactory {
         }
 
         if (conn == null) {
-            throw new RuntimeException("Failed to establish connection THIS IS THE ERRROR HERERERERERE.");
+            throw new RuntimeException("Failed to establish connection.");
         }
         return conn;
     }

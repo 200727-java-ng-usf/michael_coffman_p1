@@ -1,5 +1,7 @@
 package com.revature.servlets;
 
+import com.revature.utils.AdminHelperServlet;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -7,15 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/main/*")
-public class MasterServlet extends HttpServlet {
+@WebServlet("/admin")
+public class AdminMasterServlet extends HttpServlet {
 
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher(RequestHelper.process(req)).forward(req, resp);
-    }
 
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher(RequestHelper.process(req)).forward(req, resp);
-    }
+        String nextView = new AdminHelperServlet().process(req);
+        req.getRequestDispatcher(nextView).forward(req, resp);
 
+    }
 }
