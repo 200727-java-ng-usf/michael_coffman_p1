@@ -1,10 +1,10 @@
 const LOGIN_PAGE = document.getAnimations('login-page');
 
 window.onload = function() {
-    document.getElementById('login').addEventListener('click', toDashboard)    ;
+    document.getElementById('login').addEventListener('click', login)    ;
 }
 
-function toDashboard() {
+function login() {
 
     console.log('executing toDashboard()');
 
@@ -32,11 +32,25 @@ function toDashboard() {
          
         if (xhr.readyState == 4 && xhr.status == 204) {
             console.log('login successful!');
+            toDashboard();
         } else if (xhr.readyState == 4 && xhr.status == 400) {
             console.log('login-unsucsseful...');
         }
-
     }
+}
 
+function toDashboard() {
 
+    console.log('in toDashboard()');
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('GET', 'dash');
+    xhr.send();
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 204) {
+            console.log('Login Successful');
+        }
+    }
 }

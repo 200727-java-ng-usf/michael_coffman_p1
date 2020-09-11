@@ -44,28 +44,29 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("principal", principal.stringify());
 
-            System.out.println(session.getAttribute("principal"));
-
-            String role = authUser.getRole().toString();
+            String userJSON = mapper.writeValueAsString(principal);
+            respWriter.write(userJSON);
 
             resp.setStatus(204);
 
-            switch (role) {
-                case "ADMIN":
-                    System.out.println("Admin User Detected");
-                    //resp.sendRedirect("/project1/admin.html");
-                    req.getRequestDispatcher("/admin").forward(req, resp);
-                    break;
-                case "MANAGER":
-                    //resp.sendRedirect("/project1/html/manager.html");
-                    break;
-                case "EMPLOYEE":
-                    //resp.sendRedirect("/project1/html/employee.html");
-                    break;
-                default:
-                    //resp.sendRedirect("/project1/html/badlogin.html");
-                    break;
-            }
+
+
+//            switch (role) {
+//                case "ADMIN":
+//                    System.out.println("Admin User Detected");
+//                    //resp.sendRedirect("/project1/admin.html");
+//                    req.getRequestDispatcher("/admin").forward(req, resp);
+//                    break;
+//                case "MANAGER":
+//                    //resp.sendRedirect("/project1/html/manager.html");
+//                    break;
+//                case "EMPLOYEE":
+//                    //resp.sendRedirect("/project1/html/employee.html");
+//                    break;
+//                default:
+//                    //resp.sendRedirect("/project1/html/badlogin.html");
+//                    break;
+//            }
 
         } catch (AuthenticationException | InvalidRequestException e) {
 
