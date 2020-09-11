@@ -11,7 +11,7 @@ function toDashboard() {
     let un = document.getElementById('login-username').value;
     let pw = document.getElementById('login-password').value;
 
-    //console.log(un + " " + pw);
+    console.log(un + " " + pw);
 
     let credentials = {
         username: un,
@@ -28,8 +28,8 @@ function toDashboard() {
 
     xhr.onreadystatechange = function() {
 
-        //console.log(xhr.readyState);
-        //this does successfully 
+        console.log(xhr.readyState);
+         
         if (xhr.readyState == 4 && xhr.status == 204) {
             console.log('login successful!');
         } else if (xhr.readyState == 4 && xhr.status == 400) {

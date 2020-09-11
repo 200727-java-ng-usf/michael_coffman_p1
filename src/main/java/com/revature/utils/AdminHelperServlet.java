@@ -9,11 +9,12 @@ public class AdminHelperServlet {
 
         switch (req.getRequestURI()) {
 
-            case "/project1/dash":
-                return "html/admin.html";
+            case "/login":
+                System.out.println("you should be on the admin dashboard");
+                return "admin.html";
 
             default:
-                return null;
+                return "admin.html";
 
 
 

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
@@ -43,22 +44,26 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("principal", principal.stringify());
 
-
+            System.out.println(session.getAttribute("principal"));
 
             String role = authUser.getRole().toString();
 
+            resp.setStatus(204);
+
             switch (role) {
                 case "ADMIN":
-                    resp.sendRedirect("admin.html");
+                    System.out.println("Admin User Detected");
+                    //resp.sendRedirect("/project1/admin.html");
+                    req.getRequestDispatcher("/admin").forward(req, resp);
                     break;
                 case "MANAGER":
-                    resp.sendRedirect("/project1/html/manager.html");
+                    //resp.sendRedirect("/project1/html/manager.html");
                     break;
                 case "EMPLOYEE":
-                    resp.sendRedirect("/project1/html/employee.html");
+                    //resp.sendRedirect("/project1/html/employee.html");
                     break;
                 default:
-                    resp.sendRedirect("/project1/html/badlogin.html");
+                    //resp.sendRedirect("/project1/html/badlogin.html");
                     break;
             }
 
@@ -69,9 +74,6 @@ public class LoginServlet extends HttpServlet {
             String errorJSON = mapper.writeValueAsString(error);
             respWriter.write(errorJSON);
         }
-
-
-
     }
 }
 

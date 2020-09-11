@@ -18,8 +18,8 @@ public class ConnectionFactory {
     private ConnectionFactory() {
         super();
         try {
-//
-              properties.load(getClass().getClassLoader().getResourceAsStream("application.properties"));
+//            properties.load(new FileReader("src/main/resources/application.properties"));
+            properties.load(getClass().getClassLoader().getResourceAsStream("application.properties"));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,7 +64,7 @@ public class ConnectionFactory {
         }
 
         if (conn == null) {
-            throw new RuntimeException("Failed to establish connection.");
+            throw new RuntimeException("Failed to establish connection THIS IS THE ERRROR HERERERERERE.");
         }
         return conn;
     }
