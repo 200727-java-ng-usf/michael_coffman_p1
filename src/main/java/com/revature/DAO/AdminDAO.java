@@ -65,7 +65,7 @@ public class AdminDAO {
 
             String sql = "SELECT * FROM project1.ers_users eu " +
                          "JOIN project1.ers_user_roles ur " +
-                         "ON eu.user_role_id = ur.role_id";
+                         "ON eu.user_role_id = ur.role_id ";
 
             Statement statement = conn.createStatement();
             ResultSet results = statement.executeQuery(sql);

@@ -19,3 +19,11 @@ html, body {
 #nav-dropdown {
     color: white;
 }
+
+#all-users {
+    max-width: fit-content;
+    table-layout: fixed;
+    width: 100%;
+    overflow: auto;
+    white-space: nowrap;
+}

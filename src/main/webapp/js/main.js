@@ -115,22 +115,21 @@ function configureHomeScreen() {
     }
 }
 
+//             ------- ADMIN --------
 function configureRegisterScreen() {
     document.getElementById('register').addEventListener('click', register);
 
 }
 
 function configureUpdateScreen() {
-    window.onload = function() {
-        populateAdminTable();
-    }
+    populateAdminTable();
     //document.getElementById('update').addEventListener('click', updateUser);
 
 }
 
-// -------------- EVENT LISTENER FUNCTIONS ------------------
+// --------------------- OPERATIONS -----------------------------
 
-// -------------------- LOGIN PAGE --------------------------
+//             --------- LOGIN OPS -------------
 
 function login() {
     let un = document.getElementById('login-username').value;
@@ -164,7 +163,7 @@ function login() {
     }
 }
 
-// ------------------------ ADMIN OPS --------------------------
+//             --------- ADMIN OPS -------------
 
 function register() {
 
@@ -205,15 +204,40 @@ function register() {
 
 function populateAdminTable() {
 
+    console.log('in populateAdminTable()');
+
     let xhr = new XMLHttpRequest();
 
     xhr.open('GET', 'updateUser');
+    xhr.setRequestHeader('Content-type', 'application/json');
     xhr.send();
 
     xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 204) {
-            console.log('results displayed');
+        if (xhr.readyState == 4 && xhr.status == 200) {
+
+            let allUsers = JSON.parse(xhr.responseText);
+
+            let table = document.getElementById('all-users');
+
+            for (i = 0; i < allUsers.length; i++) {
+
+                // creates a new row each iteration
+                let newRow = document.createElement('tr');
+
+                newRow.innerHTML = '<td>' + allUsers[i].id + '</td>' +
+                                   '<td>' + allUsers[i].username + '</td>' +
+                                   '<td>' + allUsers[i].password + '</td>' +
+                                   '<td>' + allUsers[i].firstName + '</td>' +
+                                   '<td>' + allUsers[i].lastName + '</td>' +
+                                   '<td>' + allUsers[i].email + '</td>' +
+                                   '<td>' + allUsers[i].role + '</td>';
+                table.append(newRow);                
+            }
+
+            
+
         } else if (xhr.readyState == 4) {
+
             console.log('something went wrong');
         }
     }
