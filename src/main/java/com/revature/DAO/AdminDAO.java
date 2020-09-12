@@ -4,10 +4,7 @@ import com.revature.models.AppUser;
 import com.revature.models.Role;
 import com.revature.utils.ConnectionFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -25,10 +22,10 @@ public class AdminDAO {
                          "ON eu.user_role_id = ur.role_id" +
                          "WHERE username = ?";
 
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, username);
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, username);
 
-            ResultSet rs = pstmt.executeQuery();
+            ResultSet rs = statement.executeQuery();
             _user = mapResultSet(rs).stream().findFirst();
 
         } catch (SQLException sqle) {
@@ -58,6 +55,26 @@ public class AdminDAO {
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
+    }
+
+    public Set<AppUser> getAllUsers() {
+
+        Set<AppUser> users = new HashSet<>();
+
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+
+            String sql = "SELECT * FROM project1.ers_users eu " +
+                         "JOIN project1.ers_user_roles ur " +
+                         "ON eu.user_role_id = ur.role_id";
+
+            Statement statement = conn.createStatement();
+            ResultSet results = statement.executeQuery(sql);
+            users = mapResultSet(results);
+
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        return users;
     }
 
 

@@ -5,6 +5,7 @@ import com.revature.exceptions.InvalidRequestException;
 import com.revature.models.AppUser;
 
 import java.util.Optional;
+import java.util.Set;
 
 public class AdminService {
 
@@ -26,8 +27,16 @@ public class AdminService {
         }
 
         adDAO.save(newUser);
+    }
+
+    public Set<AppUser> getAllUsers() {
+
+        Set<AppUser> users = adDAO.getAllUsers();
+
+        return users;
 
     }
+
 
     public boolean isUserValid(AppUser user) {
         if (user == null) return false;

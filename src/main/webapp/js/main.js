@@ -61,7 +61,7 @@ function loadUpdateUser() {
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             APP_VIEW.innerHTML = xhr.responseText;
-            configureDeleteScreen();
+            configureUpdateScreen();
         }
     }
 }
@@ -117,6 +117,14 @@ function configureHomeScreen() {
 
 function configureRegisterScreen() {
     document.getElementById('register').addEventListener('click', register);
+
+}
+
+function configureUpdateScreen() {
+    window.onload = function() {
+        populateAdminTable();
+    }
+    //document.getElementById('update').addEventListener('click', updateUser);
 
 }
 
@@ -193,4 +201,20 @@ function register() {
     }
 
 
+}
+
+function populateAdminTable() {
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('GET', 'updateUser');
+    xhr.send();
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 204) {
+            console.log('results displayed');
+        } else if (xhr.readyState == 4) {
+            console.log('something went wrong');
+        }
+    }
 }
