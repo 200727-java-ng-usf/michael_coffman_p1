@@ -50,16 +50,20 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("principal", principal.stringify());
 
-            String userJSON = mapper.writeValueAsString(principal);
-            respWriter.write(userJSON);
+//            String role = principal.getRole();
+//            System.out.println(role);
+            String roleJSON = mapper.writeValueAsString(principal);
+            System.out.println(roleJSON);
+            respWriter.write(roleJSON);
+
 
             resp.setStatus(204);
 
-
         } catch (AuthenticationException | InvalidRequestException e) {
 
-            resp.setStatus(400);
-            ErrorResponse error = new ErrorResponse(400, "Bad credentials entered.");
+            e.printStackTrace();
+            resp.setStatus(401);
+            ErrorResponse error = new ErrorResponse(401, "Bad credentials entered.");
             String errorJSON = mapper.writeValueAsString(error);
             respWriter.write(errorJSON);
         }

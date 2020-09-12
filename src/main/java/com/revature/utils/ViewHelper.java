@@ -8,11 +8,11 @@ public class ViewHelper {
 
         switch (req.getRequestURI()) {
 
-            case "/revabooks/login.view":
+            case "/project1/login.screen":
                 return "partials/login.html";
 
-            case "/revabooks/register.view":
-                return "partials/register.html";
+            case "/project1/admin.screen":
+                return "partials/admin.html";
 
             default:
                 return null;

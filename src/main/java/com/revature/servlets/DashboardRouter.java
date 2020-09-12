@@ -1,6 +1,6 @@
 package com.revature.servlets;
 
-import com.revature.utils.DashboardHelperServlet;
+import com.revature.utils.DashboardHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,13 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/dash")
-public class DashboardMasterServlet extends HttpServlet {
+public class DashboardRouter extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String view = new DashboardHelperServlet().process(req);
-        req.getRequestDispatcher(view).forward(req, resp);
+        String user = new DashboardHelper().process(req);
+        req.getRequestDispatcher(user).forward(req, resp);
 
     }
+
 }
