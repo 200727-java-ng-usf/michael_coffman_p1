@@ -19,7 +19,7 @@ public class ConnectionFactory {
         super();
         try {
 //            properties.load(new FileReader("src/main/resources/application.properties"));
-              properties.load(getClass().getClassLoader().getResourceAsStream("application.properties"));
+            properties.load(getClass().getClassLoader().getResourceAsStream("application.properties"));
 
         } catch (Exception e) {
             e.printStackTrace();

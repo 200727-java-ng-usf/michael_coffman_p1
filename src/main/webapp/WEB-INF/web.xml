@@ -4,25 +4,8 @@
     <display-name>Reva-Reimbursements</display-name>
 
     <welcome-file-list>
-        <welcome-file>splash.html</welcome-file>
+        <welcome-file>index.html</welcome-file>
     </welcome-file-list>
-
-
-    <!-- FORWARDING MASTER SERVLET -->
-    <servlet>
-        <servlet-name>MasterServlet</servlet-name>
-        <servlet-class>com.revature.servlets.MasterServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>MasterServlet</servlet-name>
-        <url-pattern>/api/*</url-pattern>
-        <url-pattern>/login</url-pattern>
-        <url-pattern>/admin</url-pattern>
-        <url-pattern>/manager</url-pattern>
-        <url-pattern>/employee</url-pattern>
-        <url-pattern>/badlogin</url-pattern>
-    </servlet-mapping>
 
 
 </web-app>
