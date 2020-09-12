@@ -50,14 +50,12 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("principal", principal.stringify());
 
-//            String role = principal.getRole();
-//            System.out.println(role);
+            resp.setStatus(204);
+
             String roleJSON = mapper.writeValueAsString(principal);
             System.out.println(roleJSON);
             respWriter.write(roleJSON);
 
-
-            resp.setStatus(204);
 
         } catch (AuthenticationException | InvalidRequestException e) {
 

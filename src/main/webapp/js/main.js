@@ -71,8 +71,11 @@ function login() {
         console.log(xhr.readyState);
 
         if (xhr.readyState == 4 && xhr.status == 204) {
+
+            // let user = JSON.parse(xhr.response);
+
             console.log('login successful!');
-            toDashboard();
+            
 
         } else if (xhr.readyState == 4 && xhr.status == 401) {
             console.log('login unsuccessful');
@@ -81,32 +84,3 @@ function login() {
 
     }
 }
-
-function toDashboard() {
-
-    let xhr = new XMLHttpRequest();
-
-    xhr.open('GET', 'dash');
-    xhr.send();
-
-    xhr.onreadystatechange = function () {
-
-        console.log(xhr.readyState);
-
-        if (xhr.readyState == 4 && xhr.status == 200) {
-
-            if (xhr.responseText == 'partials/admin/admin.screen') {
-                console.log('going to admin page');
-                loadAdmin();
-            }
-            
-
-        } else if (xhr.readyState == 4 && xhr.status == 401) {
-            console.log('bad login');
-
-        }
-
-    }
-
-}
-
