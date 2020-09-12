@@ -21,17 +21,47 @@ function loadLogin() {
     }
 }
 
-function loadAdmin() {
+function loadHome() {
 
     let xhr = new XMLHttpRequest();
 
-    xhr.open('GET', 'admin.screen');
+    xhr.open('GET', 'home.screen');
     xhr.send();
 
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             APP_VIEW.innerHTML = xhr.responseText;
-            configureAdminScreen
+            configureHomeScreen();
+        }
+    }
+}
+
+function loadRegisterUser() {
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('GET', 'register.screen');
+    xhr.send();
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            APP_VIEW.innerHTML = xhr.responseText;
+            configureRegisterScreen();
+        }
+    }
+}
+
+function loadUpdateUser() {
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('GET', 'updateUser.screen');
+    xhr.send();
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            APP_VIEW.innerHTML = xhr.responseText;
+            configureDeleteScreen();
         }
     }
 }
@@ -42,8 +72,52 @@ function configureLoginScreen() {
     document.getElementById('login').addEventListener('click', login);
 }
 
-function configureAdminScreen() {
-    
+// 'god' dashboard for admin, manager, employee
+function configureHomeScreen() {
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('GET', 'home');
+    xhr.send();
+
+    xhr.onreadystatechange = function() {
+
+        if (xhr.readyState == 4 && xhr.status == 200) {
+
+            let role = xhr.responseText;
+
+            // ADMIN 
+            if (role == '1') {
+                console.log('admin page');
+                document.getElementById('toRegister').addEventListener('click', loadRegisterUser);
+                document.getElementById('toUpdate').addEventListener('click', loadUpdateUser);
+                document.getElementById('toManagerReimbursement').setAttribute('hidden', true);
+                document.getElementById('toEmployeeReimbursement').setAttribute('hidden', true);
+                document.getElementById('toNewReimbursement').setAttribute('hidden', true);
+                document.getElementById('toUpdateReimbursement').setAttribute('hidden', true);
+
+
+
+            // MANAGER
+            } else if (role == '2') {
+                console.log('manager page');
+                //document.getElementById('toManagerReimbursement').addEventListener('click', loadManagerReimbursements);
+
+            // EMPLOYEE
+            } else if (role == '3') {
+                console.log('employee page');
+                //document.getElementById('toReimbursements').addEventListener('click', toReimbursements);
+                //document.getElementById('toAddReimbursement').addEventListener('click', addReimbursement);
+
+
+            }
+        }
+    }
+}
+
+function configureRegisterScreen() {
+    document.getElementById('register').addEventListener('click', register);
+
 }
 
 // -------------- EVENT LISTENER FUNCTIONS ------------------
@@ -71,16 +145,52 @@ function login() {
         console.log(xhr.readyState);
 
         if (xhr.readyState == 4 && xhr.status == 204) {
-
-            // let user = JSON.parse(xhr.response);
-
             console.log('login successful!');
-            
-
+            loadHome();
+            // let user = JSON.parse(xhr.response);
         } else if (xhr.readyState == 4 && xhr.status == 401) {
             console.log('login unsuccessful');
 
         }
 
     }
+}
+
+// ------------------------ ADMIN OPS --------------------------
+
+function register() {
+
+    let fn = document.getElementById('reg-fn').value;
+    let ln = document.getElementById('reg-ln').value;
+    let un = document.getElementById('reg-un').value;
+    let pw = document.getElementById('reg-pw').value;
+    let em = document.getElementById('reg-email').value;
+    let rl = document.getElementById('reg-role').value;
+
+    let creds = {
+        firstName: fn,
+        lastName: ln,
+        username: un,
+        password: pw,
+        email: em,
+        role: rl
+    }
+
+    let newUserJSON = JSON.stringify(creds);
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('POST', 'register');
+    xhr.send(newUserJSON);
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 201) {
+            loadHome();
+        } else if (xhr.readyState == 4) {
+            console.log('something went wrong');
+            loadRegisterUser();
+        }
+    }
+
+
 }

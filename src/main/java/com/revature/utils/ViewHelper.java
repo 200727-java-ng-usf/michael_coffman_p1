@@ -11,8 +11,14 @@ public class ViewHelper {
             case "/project1/login.screen":
                 return "partials/login.html";
 
-            case "/project1/admin.screen":
-                return "partials/admin.html";
+            case "/project1/home.screen":
+                return "partials/home.html";
+
+            case "/project1/register.screen":
+                return "partials/newUser.html";
+
+            case "/project1/updateUser.screen":
+                return "partials/updateUser.html";
 
             default:
                 return null;

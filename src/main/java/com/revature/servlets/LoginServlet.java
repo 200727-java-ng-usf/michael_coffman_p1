@@ -52,9 +52,9 @@ public class LoginServlet extends HttpServlet {
 
             resp.setStatus(204);
 
-            String roleJSON = mapper.writeValueAsString(principal);
-            System.out.println(roleJSON);
-            respWriter.write(roleJSON);
+//            String roleJSON = mapper.writeValueAsString(principal);
+//            System.out.println(roleJSON);
+//            respWriter.write(roleJSON);
 
 
         } catch (AuthenticationException | InvalidRequestException e) {

@@ -12,33 +12,29 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-public class NewUserDAO {
+public class AdminDAO {
 
-    public Optional<AppUser> findUserByLogin(String username, String password) {
+    public Optional<AppUser> findUserByUsername(String username) {
 
-        Optional<AppUser> opUser = Optional.empty();
+        Optional<AppUser> _user = Optional.empty();
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
+            String sql = "SELECT * FROM project1.ers_users eu " +
+                         "JOIN project1.ers_user_roles ur " +
+                         "ON eu.user_role_id = ur.role_id" +
+                         "WHERE username = ?";
 
-            String query = "SELECT * FROM project1.ers_users eu " +
-                    "JOIN project1.ers_user_roles eur " +
-                    "ON eu.user_role_id = eur.role_id " +
-                    "WHERE username = ? AND password = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, username);
 
-
-            PreparedStatement statement = conn.prepareStatement(query);
-            statement.setString(1, username);
-            statement.setString(2, password);
-
-            ResultSet result = statement.executeQuery();
-
-            opUser = mapResultSet(result).stream().findFirst();
+            ResultSet rs = pstmt.executeQuery();
+            _user = mapResultSet(rs).stream().findFirst();
 
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
-        return opUser;
+        return _user;
     }
 
     public void save(AppUser newUser) {
@@ -48,7 +44,7 @@ public class NewUserDAO {
             String sql = "INSERT INTO project1.ers_users (username, password, first_name, last_name, email, user_role_id) " +
                          "VALUES (?, ?, ?, ?, ?, ?)";
 
-            PreparedStatement statement = conn.prepareStatement(sql, new String[] {"ers_user_id"});
+            PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, newUser.getUsername());
             statement.setString(2, newUser.getPassword());
             statement.setString(3, newUser.getFirstName());
@@ -56,12 +52,7 @@ public class NewUserDAO {
             statement.setString(5, newUser.getEmail());
             statement.setInt(6, newUser.getRole().ordinal() + 1);
 
-            int updatedRows = statement.executeUpdate();
-            if (updatedRows != 0) {
-                ResultSet results = statement.getGeneratedKeys();
-                results.next();
-                newUser.setId(results.getInt(1));
-            }
+            statement.executeUpdate();
 
 
         } catch (SQLException sqle) {
