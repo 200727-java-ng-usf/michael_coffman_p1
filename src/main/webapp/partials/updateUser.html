@@ -1,0 +1,85 @@
+
+<div id="newUser-container">
+
+    <header>Update a current user</header>
+    <hr>
+    <br>
+
+    <table class="table" id="all-users">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <body>
+
+        </body>
+        
+    </table>
+
+    <div id="updateUser-container">
+
+        <div class="form-group">
+            <label for="up-id">Id</label>
+            <input type="text" class="form-control" id="up-id"/>
+        </div>
+
+        <div class="form-group">
+            <label for="up-fn">First Name</label>
+            <input type="text" class="form-control" id="up-fn"/>
+        </div>
+    
+        <div class="form-group">
+            <label for="up-ln">Last Name</label>
+            <input type="text" class="form-control" id="up-ln"/>
+        </div>
+    
+        <div class="form-group">
+            <label for="up-username">Username</label>
+            <input type="text" class="form-control" id="up-un"/>
+        </div>
+    
+        <div class="form-group">
+            <label for="up-password">Password</label>
+            <input type="password" class="form-control" id="up-pw"/>
+        </div>
+    
+        <div class="form-group">
+            <label for="up-email">Email</label>
+            <input type="text" class="form-control" id="up-email"/>
+        </div>
+    
+        <div class="form-group">
+            <label for="role">Role</label>
+            <select class="form-control" id="up-role">
+                <option value = "EMPLOYEE">Employee</option>
+                <option value = "MANAGER">Manager</option>
+                <option value = "ADMIN">Admin</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select class="form-control" id="up-status">
+                <option value = "ACTIVE">Activate</option>
+                <option value = "DEACTIVE">Deactivate</option>
+            </select>
+        </div>
+    
+        <span>
+        <div id="register-button-container">
+            <button type="submit" class="btn btn-primary" id="update">Update</button>
+            <button type="submit" class="btn btn-primary" id="back">Dashboard</button>
+        </span>
+    </div>
+
+
+
+</div>

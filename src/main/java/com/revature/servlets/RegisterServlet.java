@@ -32,21 +32,18 @@ public class RegisterServlet extends HttpServlet {
         //make sure only an admin can access this endpoint
         String principalJSON = (String) req.getSession().getAttribute("principal");
         Principal principal = mapper.readValue(principalJSON, Principal.class);
-        if ((principal.getRole()) != "ADMIN") {
+        if (principal == null || !(principal.getRole().equalsIgnoreCase("ADMIN")) ) {
+            resp.setStatus(401);
             throw new AuthenticationException();
         }
 
         try {
 
             AppUser newUser = mapper.readValue(req.getInputStream(), AppUser.class);
-//            System.out.println(newUser);
             adService.register(newUser);
             resp.setStatus(201);
 
-
-
-
-
+          // TODO Add custom exception handling
         } catch (Exception e) {
             e.printStackTrace();
         }

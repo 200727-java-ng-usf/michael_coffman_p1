@@ -27,13 +27,13 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getSession().invalidate();
-        resp.setStatus(204);
+        resp.setStatus(200);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        // JSON -> JAVA language mapper
+        // JSON <-> JAVA language mapper
         ObjectMapper mapper = new ObjectMapper();
         // Writer to return responses back to server
         PrintWriter respWriter = resp.getWriter();
@@ -43,19 +43,19 @@ public class LoginServlet extends HttpServlet {
         try {
 
             Credentials creds = mapper.readValue(req.getInputStream(), Credentials.class);
-
             AppUser authUser = logService.authenticate(creds.getUsername(), creds.getPassword());
-            Principal principal = new Principal(authUser);
 
+            //Prevent deactivated user from logging in
+            if (!(authUser.getStatus().equalsIgnoreCase("ACTIVE"))) {
+                resp.setStatus(401);
+                return;
+            }
+
+            Principal principal = new Principal(authUser);
             HttpSession session = req.getSession();
             session.setAttribute("principal", principal.stringify());
 
             resp.setStatus(204);
-
-//            String roleJSON = mapper.writeValueAsString(principal);
-//            System.out.println(roleJSON);
-//            respWriter.write(roleJSON);
-
 
         } catch (AuthenticationException | InvalidRequestException e) {
 

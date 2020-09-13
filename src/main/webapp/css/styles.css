@@ -16,6 +16,12 @@ html, body {
     align-items: center;
 }
 
+header {
+    color: blue;
+    padding: 0.2rem;
+    font-size: 1.5rem;
+}
+
 #nav-dropdown {
     color: white;
 }

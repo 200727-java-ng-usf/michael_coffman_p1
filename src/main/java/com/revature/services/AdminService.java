@@ -5,6 +5,7 @@ import com.revature.exceptions.InvalidRequestException;
 import com.revature.models.AppUser;
 
 import java.util.Optional;
+import java.util.Set;
 
 public class AdminService {
 
@@ -21,12 +22,24 @@ public class AdminService {
         Optional<AppUser> existingUser = adDAO.findUserByUsername(newUser.getUsername());
 
         if (existingUser.isPresent()) {
-            // TODO implement a custom ResourcePersistenceException
             throw new RuntimeException("Provided username is already in use!");
         }
 
         adDAO.save(newUser);
+    }
 
+    public Set<AppUser> getAllUsers() {
+
+        Set<AppUser> users = adDAO.getAllUsers();
+
+        return users;
+    }
+
+    public boolean updateUser(AppUser existingUser) {
+        if (adDAO.updateUser(existingUser)) {
+            return true;
+        }
+        return false;
     }
 
     public boolean isUserValid(AppUser user) {
