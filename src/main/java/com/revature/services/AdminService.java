@@ -22,7 +22,6 @@ public class AdminService {
         Optional<AppUser> existingUser = adDAO.findUserByUsername(newUser.getUsername());
 
         if (existingUser.isPresent()) {
-            // TODO implement a custom ResourcePersistenceException
             throw new RuntimeException("Provided username is already in use!");
         }
 
@@ -34,9 +33,14 @@ public class AdminService {
         Set<AppUser> users = adDAO.getAllUsers();
 
         return users;
-
     }
 
+    public boolean updateUser(AppUser existingUser) {
+        if (adDAO.updateUser(existingUser)) {
+            return true;
+        }
+        return false;
+    }
 
     public boolean isUserValid(AppUser user) {
         if (user == null) return false;

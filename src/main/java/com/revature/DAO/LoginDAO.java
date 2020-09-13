@@ -56,6 +56,7 @@ public class LoginDAO {
             temp.setPassword(results.getString("last_name"));
             temp.setEmail(results.getString("email"));
             temp.setRole(Role.getRoleName(results.getString("role_name")));
+            temp.setStatus(results.getString("status"));
 
             // Add all the mapped data into a Set<AppUser> object
             user.add(temp);

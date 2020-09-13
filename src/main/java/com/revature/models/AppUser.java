@@ -11,6 +11,7 @@ public class AppUser {
     private String email;
     private Role role;
     private int id;
+    private String status;
 
 
     // Constructors
@@ -34,6 +35,11 @@ public class AppUser {
     public AppUser(String firstName, String lastName, String username, String password, String email, Role role, int id) {
         this(firstName, lastName, username, password, email, role);
         this.id = id;
+    }
+
+    public AppUser(String firstName, String lastName, String username, String password, String email, Role role, int id, String status) {
+        this(firstName, lastName, username, password, email, role, id);
+        this.status = status;
     }
 
     // Getters & Setters
@@ -93,6 +99,14 @@ public class AppUser {
         this.id = id;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     // Equals() and Hashcode() methods
     @Override
     public boolean equals(Object o) {
@@ -110,7 +124,7 @@ public class AppUser {
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, username, password, email, role, id);
+        return Objects.hash(firstName, lastName, username, password, email, role, id, status);
     }
 
     // toString() method
@@ -124,6 +138,7 @@ public class AppUser {
                 ", email='" + email + '\'' +
                 ", role=" + role +
                 ", id=" + id +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

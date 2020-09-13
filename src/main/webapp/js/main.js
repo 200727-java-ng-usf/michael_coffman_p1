@@ -4,7 +4,7 @@ window.onload = function() {
     loadLogin();
 }
 
-//----------- LOAD SCREENS -------------
+//---------------------- LOAD SCREENS ------------------------
 
 function loadLogin() {
 
@@ -36,6 +36,7 @@ function loadHome() {
     }
 }
 
+//                   ------- ADMIN --------            
 function loadRegisterUser() {
 
     let xhr = new XMLHttpRequest();
@@ -66,14 +67,25 @@ function loadUpdateUser() {
     }
 }
 
-// ---------------- CONFIGURE SCREENS ---------------
+//                   ------- ADMIN --------
+function loadNewReimbursement() {
 
+}
+
+function loadUpdateReimbursement() {
+
+}
+
+// -------------------- CONFIGURE SCREENS --------------------------------------------------
+
+//                   ------- LOGIN -------- 
 function configureLoginScreen() {
     document.getElementById('login').addEventListener('click', login);
 }
 
-// 'god' dashboard for admin, manager, employee
+//                    ------- HOME --------
 function configureHomeScreen() {
+    document.getElementById('logout').addEventListener('click', logout);
 
     let xhr = new XMLHttpRequest();
 
@@ -106,30 +118,33 @@ function configureHomeScreen() {
             // EMPLOYEE
             } else if (role == '3') {
                 console.log('employee page');
-                //document.getElementById('toReimbursements').addEventListener('click', toReimbursements);
-                //document.getElementById('toAddReimbursement').addEventListener('click', addReimbursement);
-
+                document.getElementById('toRegister').setAttribute('hidden', true);
+                document.getElementById('toUpdate').setAttribute('hidden', true);
+                document.getElementById('toManagerReimbursement').setAttribute('hidden', true);
+                document.getElementById('toEmployeeReimbursement').setAttribute('hidden', true);
+                document.getElementById('toNewReimbursement').addEventListener('click', loadNewReimbursement);
+                document.getElementById('toUpdateReimbursement').addEventListener('click', loadUpdateReimbursement);
 
             }
         }
     }
 }
 
-//             ------- ADMIN --------
+//                   ------- ADMIN --------
 function configureRegisterScreen() {
     document.getElementById('register').addEventListener('click', register);
-
+    document.getElementById('back').addEventListener('click', backToDash);
 }
 
 function configureUpdateScreen() {
     populateAdminTable();
-    //document.getElementById('update').addEventListener('click', updateUser);
-
+    document.getElementById('update').addEventListener('click', updateUser);
+    document.getElementById('back').addEventListener('click', backToDash);
 }
 
-// --------------------- OPERATIONS -----------------------------
+// ------------------------ OPERATIONS -------------------------------------------------------
 
-//             --------- LOGIN OPS -------------
+//                --------- LOGIN OPS -------------
 
 function login() {
     let un = document.getElementById('login-username').value;
@@ -157,13 +172,34 @@ function login() {
             // let user = JSON.parse(xhr.response);
         } else if (xhr.readyState == 4 && xhr.status == 401) {
             console.log('login unsuccessful');
-
+            loadLogin
         }
 
     }
 }
 
-//             --------- ADMIN OPS -------------
+function logout() {
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', 'login');
+    xhr.send();
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log('Logging Out');
+            loadLogin();
+        } else {
+            console.log('User session still active');
+        }
+    }
+    
+}
+
+function backToDash() {
+    loadHome();
+}
+
+//                 --------- ADMIN OPS -------------
 
 function register() {
 
@@ -216,29 +252,61 @@ function populateAdminTable() {
         if (xhr.readyState == 4 && xhr.status == 200) {
 
             let allUsers = JSON.parse(xhr.responseText);
-
-            let table = document.getElementById('all-users');
-
-            for (i = 0; i < allUsers.length; i++) {
-
-                // creates a new row each iteration
-                let newRow = document.createElement('tr');
-
-                newRow.innerHTML = '<td>' + allUsers[i].id + '</td>' +
-                                   '<td>' + allUsers[i].username + '</td>' +
-                                   '<td>' + allUsers[i].password + '</td>' +
-                                   '<td>' + allUsers[i].firstName + '</td>' +
-                                   '<td>' + allUsers[i].lastName + '</td>' +
-                                   '<td>' + allUsers[i].email + '</td>' +
-                                   '<td>' + allUsers[i].role + '</td>';
-                table.append(newRow);                
-            }
-
             
-
-        } else if (xhr.readyState == 4) {
-
+            $('#all-users').DataTable( {
+                data: allUsers,
+                columns: [
+                    { data: 'id' },
+                    { data: 'username' },
+                    { data: 'password' },
+                    { data: 'firstName' },
+                    { data: 'lastName' },
+                    { data: 'email' },
+                    { data: 'role' },
+                    { data: 'status'}
+                ]
+            } );
+        } else if (xhr.readyState == 4 && xhr.status != 200) {
             console.log('something went wrong');
+        }
+    }
+}
+
+function updateUser() {
+
+    let id = document.getElementById('up-id').value;
+    let fn = document.getElementById('up-fn').value;
+    let ln = document.getElementById('up-ln').value;
+    let un = document.getElementById('up-un').value;
+    let pw = document.getElementById('up-pw').value;
+    let em = document.getElementById('up-email').value;
+    let rl = document.getElementById('up-role').value;
+    let st = document.getElementById('up-status').value;
+
+    let info = {
+        id: id,
+        firstName: fn,
+        lastName: ln,
+        username: un,
+        password: pw,
+        email: em,
+        role: rl,
+        status: st
+    }
+
+    infoJSON = JSON.stringify(info);
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('POST', 'updateUser');
+    xhr.send(infoJSON);
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 202) {
+            console.log('User updated!');
+            loadUpdateUser();
+        } else if (xhr.readyState == 4 && xhr.status == 400) {
+            console.log('User failed to update...');
         }
     }
 }

@@ -16,14 +16,12 @@ html, body {
     align-items: center;
 }
 
-#nav-dropdown {
-    color: white;
+header {
+    color: blue;
+    padding: 0.2rem;
+    font-size: 1.5rem;
 }
 
-#all-users {
-    max-width: fit-content;
-    table-layout: fixed;
-    width: 100%;
-    overflow: auto;
-    white-space: nowrap;
+#nav-dropdown {
+    color: white;
 }
