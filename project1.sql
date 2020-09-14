@@ -56,6 +56,7 @@ CREATE TABLE ers_users(
 	first_name				varchar(25) NOT NULL,
 	last_name				varchar(25) NOT NULL,
 	email					varchar(256) NOT NULL,
+	status					varchar(10) NOT NULL DEFAULT 'Active',
 	user_role_id			int NOT NULL,
 	
 	CONSTRAINT ers_user_pk
@@ -108,6 +109,6 @@ SELECT * FROM ers_user_roles;
 
 -- Inserting initial Admin user
 INSERT INTO ers_users 
-	VALUES (1, 'mcoffma04', 'adminpass', 'Michael', 'Coffman', 'michael.coffman@revature.net', 1);
+	VALUES (1, 'mcoffma04', 'adminpass', 'Michael', 'Coffman', 'michael.coffman@revature.net', 'Active', 1);
 
 COMMIT;
