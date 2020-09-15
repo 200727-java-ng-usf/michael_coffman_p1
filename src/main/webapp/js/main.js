@@ -67,13 +67,39 @@ function loadUpdateUser() {
     }
 }
 
-//                   ------- ADMIN --------
+//                  ------- MANAGER --------
+
+
+
+//                 ------- EMPLOYEE --------
 function loadNewReimbursement() {
 
+        let xhr = new XMLHttpRequest();
+    
+        xhr.open('GET', 'newReimburse.screen');
+        xhr.send();
+    
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                APP_VIEW.innerHTML = xhr.responseText;
+                configureNewReimbursementScreen();
+            }
+        }
 }
 
 function loadUpdateReimbursement() {
 
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('GET', 'updateReimburse.screen');
+    xhr.send();
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            APP_VIEW.innerHTML = xhr.responseText;
+            configureUpdateReimbursementScreen();
+        }
+    }
 }
 
 // -------------------- CONFIGURE SCREENS --------------------------------------------------
@@ -141,6 +167,22 @@ function configureUpdateScreen() {
     document.getElementById('update').addEventListener('click', updateUser);
     document.getElementById('back').addEventListener('click', backToDash);
 }
+
+//                   ------- MANAGER --------
+
+
+//                   ------- EMPLOYEE --------
+function configureNewReimbursementScreen() {
+    document.getElementById('reimb-submit').addEventListener('click', submitReimbursement);
+    document.getElementById('back').addEventListener('click', backToDash);
+}
+
+function configureUpdateReimbursementScreen() {
+    populateReimbursementTable();
+    document.getElementById('updateReimburse').addEventListener('click', updateReimbursement);
+    document.getElementById('back').addEventListener('click', backToDash);
+}
+
 
 // ------------------------ OPERATIONS -------------------------------------------------------
 
@@ -305,6 +347,106 @@ function updateUser() {
         if (xhr.readyState == 4 && xhr.status == 202) {
             console.log('User updated!');
             loadUpdateUser();
+        } else if (xhr.readyState == 4 && xhr.status == 400) {
+            console.log('User failed to update...');
+        }
+    }
+}
+
+//                 --------- MANAGER OPS -------------
+
+
+
+
+
+//                --------- EMPLOYEE OPS -------------
+function populateReimbursementTable() {
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('GET', 'updateReimburse');
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.send();
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+
+            let userReimbursements = JSON.parse(xhr.responseText);
+            
+            $('#all-reimbursements').DataTable( {
+                data: userReimbursements,
+                columns: [
+                    { data: 'id' },
+                    { data: 'amount' },
+                    { data: 'submitted' },
+                    { data: 'resolved' },
+                    { data: 'description' },
+                    { data: 'resolverName' },
+                    { data: 'typeId' },
+                    { data: 'statusId'}
+                ]
+            } );
+        } else if (xhr.readyState == 4 && xhr.status != 200) {
+            console.log('something went wrong');
+        }
+    }
+}
+
+function submitReimbursement() {
+
+    let amt = document.getElementById('reg-amt').value;
+    let desc = document.getElementById('reg-desc').value;
+    let type = document.getElementById('reg-type').value;
+
+    let reimbursement = {
+        amount: amt,
+        description: desc,
+        typeId: type
+    }
+
+    let newReimburseJSON = JSON.stringify(reimbursement);
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('POST', 'newReimburse');
+    xhr.send(newReimburseJSON);
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 201) {
+            loadHome();
+        } else if (xhr.readyState == 4) {
+            console.log('something went wrong');
+            loadNewReimbursement();
+        }
+    }
+
+}
+
+function updateReimbursement() {
+
+    let id = document.getElementById('up-id').value;
+    let amt = document.getElementById('up-amt').value;
+    let desc = document.getElementById('up-desc').value;
+    let type = document.getElementById('up-type').value;
+
+    let info = {
+        id: id,
+        amount: amt,
+        description: desc,
+        typeId: type,
+    }
+
+    let updateReimburseJSON = JSON.stringify(info);
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('POST', 'updateReimburse');
+    xhr.send(updateReimburseJSON);
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 202) {
+            console.log('Reimbursement updated!');
+            loadUpdateReimbursement();
         } else if (xhr.readyState == 4 && xhr.status == 400) {
             console.log('User failed to update...');
         }

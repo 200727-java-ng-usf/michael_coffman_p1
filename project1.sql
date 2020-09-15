@@ -8,11 +8,11 @@ TO project1_user;
 COMMIT;
 
 -- Convienent Drop Tables Spot
---DROP TABLE ers_reimbursements;
---DROP TABLE ers_users;
---DROP TABLE ers_reimbursement_statuses;
---DROP TABLE ers_reimbursement_types;
---DROP TABLE ers_user_roles;
+DROP TABLE ers_reimbursements;
+DROP TABLE ers_users;
+DROP TABLE ers_reimbursement_statuses;
+DROP TABLE ers_reimbursement_types;
+DROP TABLE ers_user_roles;
 
 
 -- Creating TABLES
@@ -20,13 +20,12 @@ COMMIT;
 CREATE TABLE ers_reimbursements(
 	reimb_id				serial NOT NULL,
 	amount					numeric(6,2) DEFAULT 0.00 NOT NULL,
-	submitted				timestamp NOT NULL,
-	resolved				timestamp NOT NULL,
-	description				varchar(75) NOT NULL,
-	receipt 				TEXT,
+	submitted				timestamp DEFAULT NOW(),
+	resolved				timestamp,
+	description				TEXT NOT NULL,
 	author_id				int NOT NULL,
 	resolver_id				int,
-	reimb_status_id			int NOT NULL,
+	reimb_status_id			int NOT NULL DEFAULT 1,
 	reimb_type_id			int NOT NULL,
 	
 	CONSTRAINT ers_reimbursements_pk
@@ -103,8 +102,8 @@ INSERT INTO ers_reimbursement_statuses (reimb_status)
 
 SELECT * FROM ers_reimbursements;
 SELECT * FROM ers_users;
-SELECT * FROM ers_reimbursement_statuses;
 SELECT * FROM ers_reimbursement_types;
+SELECT * FROM ers_reimbursement_statuses;
 SELECT * FROM ers_user_roles;
 
 -- Inserting initial Admin user

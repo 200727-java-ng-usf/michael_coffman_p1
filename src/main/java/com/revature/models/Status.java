@@ -1,8 +1,6 @@
 package com.revature.models;
 
 import java.util.Arrays;
-import java.util.Optional;
-
 
 
 /**
@@ -21,10 +19,11 @@ public enum Status {
         this.statusName = statusName;
     }
 
-    public static Optional<Status> getStatus(String name) {
+    public static Status getStatus(String name) {
         return Arrays.stream(Status.values())
                 .filter(status -> status.statusName.equals(name))
-                .findFirst();
+                .findFirst()
+                .orElse(PENDING);
     }
 
     @Override

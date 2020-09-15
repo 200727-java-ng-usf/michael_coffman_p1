@@ -20,6 +20,12 @@ public class ViewHelper {
             case "/project1/updateUser.screen":
                 return "partials/updateUser.html";
 
+            case "/project1/newReimburse.screen":
+                return "partials/newReimburse.html";
+
+            case "/project1/updateReimburse.screen":
+                return "partials/updateReimburse.html";
+
             default:
                 return null;
 

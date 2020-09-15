@@ -27,19 +27,15 @@ public class AppUser {
         this.email = email;
     }
 
-    public AppUser(String firstName, String lastName, String username, String password, String email, Role role) {
+    public AppUser(String firstName, String lastName, String username, String password, String email, Role role, String status) {
         this(firstName, lastName, username, password, email);
         this.role = role;
-    }
-
-    public AppUser(String firstName, String lastName, String username, String password, String email, Role role, int id) {
-        this(firstName, lastName, username, password, email, role);
-        this.id = id;
-    }
-
-    public AppUser(String firstName, String lastName, String username, String password, String email, Role role, int id, String status) {
-        this(firstName, lastName, username, password, email, role, id);
         this.status = status;
+    }
+
+    public AppUser(String firstName, String lastName, String username, String password, String email, Role role, String status, int id) {
+        this(firstName, lastName, username, password, email, role, status);
+        this.id = id;
     }
 
     // Getters & Setters

@@ -26,8 +26,9 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getSession().invalidate();
         resp.setStatus(200);
+        req.getSession().invalidate();
+
     }
 
     @Override

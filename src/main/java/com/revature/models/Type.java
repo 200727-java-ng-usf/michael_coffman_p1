@@ -1,7 +1,6 @@
 package com.revature.models;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 
 /**
@@ -21,10 +20,11 @@ public enum Type {
         this.typeName = typeName;
     }
 
-    public static Optional<Type> getType(String name) {
+    public static Type getType(String name) {
         return Arrays.stream(Type.values())
                 .filter(type -> type.typeName.equals(name))
-                .findFirst();
+                .findFirst()
+                .orElse(OTHER);
     }
 
     @Override
