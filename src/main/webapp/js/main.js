@@ -101,6 +101,21 @@ function loadNewReimbursement() {
         }
 }
 
+function loadAllReimbursements() {
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('GET', 'allReimbursements.screen');
+    xhr.send();
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            APP_VIEW.innerHTML = xhr.responseText;
+            configureAllReimbursementsScreen();
+        }
+    }
+}
+
 function loadUpdateReimbursement() {
 
     let xhr = new XMLHttpRequest();
@@ -145,6 +160,7 @@ function configureHomeScreen() {
                 document.getElementById('toUpdate').addEventListener('click', loadUpdateUser);
                 document.getElementById('toManagerReimbursement').setAttribute('hidden', true);
                 document.getElementById('toNewReimbursement').setAttribute('hidden', true);
+                document.getElementById('allReimbursements').setAttribute('hidden', true);
                 document.getElementById('toUpdateReimbursement').setAttribute('hidden', true);
 
 
@@ -156,6 +172,7 @@ function configureHomeScreen() {
                 document.getElementById('toUpdate').setAttribute('hidden', true);
                 document.getElementById('toManagerReimbursement').addEventListener('click', loadManagerReimbursements);
                 document.getElementById('toNewReimbursement').setAttribute('hidden', true);
+                document.getElementById('allReimbursements').setAttribute('hidden', true);
                 document.getElementById('toUpdateReimbursement').setAttribute('hidden', true);
 
             // EMPLOYEE
@@ -165,6 +182,7 @@ function configureHomeScreen() {
                 document.getElementById('toUpdate').setAttribute('hidden', true);
                 document.getElementById('toManagerReimbursement').setAttribute('hidden', true);
                 document.getElementById('toNewReimbursement').addEventListener('click', loadNewReimbursement);
+                document.getElementById('allReimbursements').addEventListener('click', loadAllReimbursements)
                 document.getElementById('toUpdateReimbursement').addEventListener('click', loadUpdateReimbursement);
 
             }
@@ -195,6 +213,11 @@ function configureManageReimbursements() {
 //                   ------- EMPLOYEE --------
 function configureNewReimbursementScreen() {
     document.getElementById('reimb-submit').addEventListener('click', submitReimbursement);
+    document.getElementById('back').addEventListener('click', backToDash);
+}
+
+function configureAllReimbursementsScreen() {
+    populateAllReimbursements();
     document.getElementById('back').addEventListener('click', backToDash);
 }
 
@@ -450,6 +473,36 @@ function populateReimbursementTable() {
             let userReimbursements = JSON.parse(xhr.responseText);
             
             $('#all-reimbursements').DataTable( {
+                data: userReimbursements,
+                columns: [
+                    { data: 'id' },
+                    { data: 'amount' },
+                    { data: 'submitted' },
+                    { data: 'description' },
+                    { data: 'typeId' },
+                    { data: 'statusId'}
+                ]
+            } );
+        } else if (xhr.readyState == 4 && xhr.status != 200) {
+            console.log('something went wrong');
+        }
+    }
+}
+
+function populateAllReimbursements() {
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('GET', 'allReimbursements');
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.send();
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+
+            let userReimbursements = JSON.parse(xhr.responseText);
+            
+            $('#every-reimbursements').DataTable( {
                 data: userReimbursements,
                 columns: [
                     { data: 'id' },

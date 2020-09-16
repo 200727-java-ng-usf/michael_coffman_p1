@@ -13,9 +13,15 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ *  Handles CRUD operations for the Finance Manager
+ */
 public class ManagerDAO {
 
-
+    /**
+     *  Retreives all the reimbursements that have PENDING status
+     * @return
+     */
     public Set<Reimbursements> getAllReimbursements() {
 
         Set<Reimbursements> reimbursements = new HashSet<>();
@@ -45,6 +51,11 @@ public class ManagerDAO {
         return reimbursements;
     }
 
+    /**
+     *  Retrieves the selected reimbursement to apply the APPROVED or DENIED status
+     * @param id
+     * @return
+     */
     public Reimbursements getReimbursementById(int id) {
 
         Reimbursements reimbursements = new Reimbursements();
@@ -70,10 +81,6 @@ public class ManagerDAO {
                 reimbursements.setTypeId(Type.getType(results.getString("reimb_type_id")));
                 reimbursements.setStatusId(Status.getStatus(results.getString("reimb_status_id")));
             }
-            //reimbursements = mapResultSet(results);
-
-            // Testing to make sure reimbursements are gathered as expected
-            //System.out.println(reimbursements);
 
         } catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -81,6 +88,11 @@ public class ManagerDAO {
         return reimbursements;
     }
 
+    /**
+     *  Performs the UPDATE on the selected reimbursement status
+     * @param reimbursement
+     * @return
+     */
     public boolean approveOrDeny(Reimbursements reimbursement) {
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
@@ -110,30 +122,12 @@ public class ManagerDAO {
         return false;
     }
 
-    private Set<Reimbursements> mapResultSet(ResultSet results) throws SQLException {
-
-        Set<Reimbursements> reimbursements = new HashSet<>();
-
-        while (results.next()) {
-            Reimbursements temp = new Reimbursements();
-            temp.setId(results.getInt("reimb_id"));
-            temp.setAmount(results.getDouble("amount"));
-            temp.setSubmitted(results.getTimestamp("submitted"));
-            temp.setResolved(results.getTimestamp("resolved"));
-            temp.setDescription(results.getString("description"));
-            temp.setAuthorId(results.getInt("author_id"));
-            temp.setResolverId(results.getInt("resolver_id"));
-            temp.setTypeId(Type.getType(results.getString("reimb_type_id")));
-            temp.setStatusId(Status.getStatus(results.getString("reimb_status_id")));
-
-
-            // Add all the mapped data into a Set<AppUser> object
-            reimbursements.add(temp);
-        }
-
-        return reimbursements;
-
-    }
+    /**
+     *  Maps Set<Reimbursements> to be displayed in the DataTables table
+     * @param results
+     * @return
+     * @throws SQLException
+     */
     private Set<Reimbursements> mapResultSetForTable(ResultSet results) throws SQLException {
 
         Set<Reimbursements> reimbursements = new HashSet<>();

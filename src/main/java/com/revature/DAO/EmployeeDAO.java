@@ -90,13 +90,13 @@ public class EmployeeDAO {
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             String sql = "SELECT * FROM project1.ers_reimbursements er " +
-                         "JOIN project1.ers_users eu " +
-                         "ON er.author_id = eu.ers_user_id " +
-                         "JOIN project1.ers_reimbursement_statuses ers " +
-                         "ON er.reimb_status_id = ers.reimb_status_id " +
-                         "JOIN project1.ers_reimbursement_types ert " +
-                         "ON er.reimb_type_id = ert.reimb_type_id " +
-                         "WHERE er.author_id = ?";
+                    "JOIN project1.ers_users eu " +
+                    "ON er.resolver_id = eu.ers_user_id " +
+                    "JOIN project1.ers_reimbursement_statuses ers " +
+                    "ON er.reimb_status_id = ers.reimb_status_id " +
+                    "JOIN project1.ers_reimbursement_types ert " +
+                    "ON er.reimb_type_id = ert.reimb_type_id " +
+                    "WHERE er.author_id = ?";
 
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, currentUser.getId());
@@ -104,8 +104,32 @@ public class EmployeeDAO {
             ResultSet results = statement.executeQuery();
             reimbursements = mapResultSet(results);
 
-            // Testing to make sure reimbursements are gathered as expected
-            // System.out.println(reimbursements);
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        return reimbursements;
+    }
+
+    public Set<Reimbursements> pendingReimbursements(Principal currentUser) {
+
+        Set<Reimbursements> reimbursements = new HashSet<>();
+
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+
+            String sql = "SELECT * FROM project1.ers_reimbursements er " +
+                    "JOIN project1.ers_users eu " +
+                    "ON er.author_id = eu.ers_user_id " +
+                    "JOIN project1.ers_reimbursement_statuses ers " +
+                    "ON er.reimb_status_id = ers.reimb_status_id " +
+                    "JOIN project1.ers_reimbursement_types ert " +
+                    "ON er.reimb_type_id = ert.reimb_type_id " +
+                    "WHERE er.author_id = ? AND er.reimb_status_id = 1";
+
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, currentUser.getId());
+
+            ResultSet results = statement.executeQuery();
+            reimbursements = pendingResults(results);
 
         } catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -130,7 +154,29 @@ public class EmployeeDAO {
             temp.setSubmitted(results.getTimestamp("submitted"));
             temp.setResolved(results.getTimestamp("resolved"));
             temp.setDescription(results.getString("description"));
-            temp.setResolverName(results.getString("resolver_id"));
+            temp.setResolverName(results.getString("username"));
+            temp.setTypeId(Type.getType(results.getString("reimb_type")));
+            temp.setStatusId(Status.getStatus(results.getString("reimb_status")));
+
+
+            // Add all the mapped data into a Set<AppUser> object
+            reimbursements.add(temp);
+        }
+
+        return reimbursements;
+
+    }
+
+    private Set<Reimbursements> pendingResults(ResultSet results) throws SQLException {
+
+        Set<Reimbursements> reimbursements = new HashSet<>();
+
+        while (results.next()) {
+            Reimbursements temp = new Reimbursements();
+            temp.setId(results.getInt("reimb_id"));
+            temp.setAmount(results.getDouble("amount"));
+            temp.setSubmitted(results.getTimestamp("submitted"));
+            temp.setDescription(results.getString("description"));
             temp.setTypeId(Type.getType(results.getString("reimb_type")));
             temp.setStatusId(Status.getStatus(results.getString("reimb_status")));
 

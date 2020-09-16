@@ -48,7 +48,7 @@ public class UpdateReimbursementServlet extends HttpServlet {
 
         // Running the getUsersReimbursements from EmployeeServices to get a Set<Reimbursements> and
         // map to JSON
-        Set<Reimbursements> usersReimbursements = empService.getUsersReimbursements(principal);
+        Set<Reimbursements> usersReimbursements = empService.getPendingReimbursements(principal);
         String reimbursementJSON = mapper.writeValueAsString(usersReimbursements);
 
         // Responding to the server with the JSON String
