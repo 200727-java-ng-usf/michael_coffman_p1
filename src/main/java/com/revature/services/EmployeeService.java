@@ -43,6 +43,17 @@ public class EmployeeService {
         return null;
     }
 
+    public Set<Reimbursements> getPendingReimbursements(Principal currentUserReimbursements) {
+
+        try {
+            Set<Reimbursements> reimbursements = empDAO.pendingReimbursements(currentUserReimbursements);
+            return reimbursements;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * Takes in a Reimbursements and updates a Reimbursement belonging to the same
      * session user's Id and specified reimbursement Id

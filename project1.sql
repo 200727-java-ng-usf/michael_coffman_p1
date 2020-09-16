@@ -111,3 +111,5 @@ INSERT INTO ers_users
 	VALUES (1, 'mcoffma04', 'adminpass', 'Michael', 'Coffman', 'michael.coffman@revature.net', 'Active', 1);
 
 COMMIT;
+
+

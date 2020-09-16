@@ -23,6 +23,9 @@ public class ViewHelper {
             case "/project1/newReimburse.screen":
                 return "partials/newReimburse.html";
 
+            case "/project1/allReimbursements.screen":
+                return "partials/allReimbursements.html";
+
             case "/project1/updateReimburse.screen":
                 return "partials/updateReimburse.html";
 
