@@ -15,43 +15,72 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Set;
 
+/**
+ *  Responsible for updating a current user in the server's DB
+ */
 @WebServlet("/updateUser")
 public class UpdateUser extends HttpServlet {
 
     private final AdminService adService = new AdminService();
 
+    /**
+     * Collects all the users in the server and responds with a JSON array to display in a table.
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ObjectMapper mapper = new ObjectMapper();
-        PrintWriter respWriter = resp.getWriter();
-        resp.setContentType("application/json");
+        try {
 
-        Set<AppUser> allUsers = adService.getAllUsers();
+            ObjectMapper mapper = new ObjectMapper();
+            PrintWriter respWriter = resp.getWriter();
+            resp.setContentType("application/json");
 
-        String usersJSON = mapper.writeValueAsString(allUsers);
+            // Collect Set<AppUsers> for JSON String
+            Set<AppUser> allUsers = adService.getAllUsers();
 
-        respWriter.write(usersJSON);
+            // Maps the Set to a JSON String
+            String usersJSON = mapper.writeValueAsString(allUsers);
 
-        resp.setStatus(200);
+            respWriter.write(usersJSON);
+            resp.setStatus(200);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            resp.setStatus(503);
+        }
 
     }
 
+    /**
+     * Updates a user with new information filled out by the admin
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ObjectMapper mapper = new ObjectMapper();
-        PrintWriter respWriter = resp.getWriter();
-        resp.setContentType("application/json");
+        try {
 
-        AppUser existingUser = mapper.readValue(req.getInputStream(), AppUser.class);
+            ObjectMapper mapper = new ObjectMapper();
+            PrintWriter respWriter = resp.getWriter();
+            resp.setContentType("application/json");
 
-        System.out.println(existingUser);
-        if (adService.updateUser(existingUser)) {
-            resp.setStatus(202); // 1 or more rows were updated, so success
+            AppUser existingUser = mapper.readValue(req.getInputStream(), AppUser.class);
 
-        } else {
-            resp.setStatus(400); // The updateUser method failed becuase all values matched
+            System.out.println(existingUser);
+            if (adService.updateUser(existingUser)) {
+                resp.setStatus(202); // 1 or more rows were updated, so success
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            resp.setStatus(503);
         }
 
 

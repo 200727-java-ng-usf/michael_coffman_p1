@@ -1,0 +1,63 @@
+
+<div id="updateReimburse-container">
+
+    <header>Update a pending reimbursement</header>
+    <hr>
+    <br>
+
+    <table class="table" id="all-reimbursements">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Amount</th>
+            <th>Time Submitted</th>
+            <th>Time Resolved</th>
+            <th>Description</th>
+            <th>Resolver</th>
+            <th>Type</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <body>
+
+        </body>
+        
+    </table>
+
+    <div id="updateReimburse-container">
+
+        <div class="form-group">
+            <label for="up-id">Id</label>
+            <input type="text" class="form-control" id="up-id"/>
+        </div>
+
+        <div class="form-group">
+            <label for="up-amt">Amount</label>
+            <input type="text" class="form-control" id="up-amt"/>
+        </div>
+    
+        <div class="form-group">
+            <label for="up-desc">Description</label>
+            <input type="text" class="form-control" id="up-desc"/>
+        </div>
+    
+        <div class="form-group">
+            <label for="type">Type</label>
+            <select class="form-control" id="up-type">
+                <option value = "LODGING">Lodging</option>
+                <option value = "TRAVEL">Travel</option>
+                <option value = "FOOD">Food</option>
+                <option value = "OTHER">Other</option>
+            </select>
+        </div>
+    
+        <span>
+        <div id="register-button-container">
+            <button type="submit" class="btn btn-primary" id="updateReimburse">Update</button>
+            <button type="submit" class="btn btn-primary" id="back">Dashboard</button>
+        </span>
+    </div>
+
+
+
+</div>
