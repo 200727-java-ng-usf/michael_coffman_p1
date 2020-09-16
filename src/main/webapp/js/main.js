@@ -68,6 +68,20 @@ function loadUpdateUser() {
 }
 
 //                  ------- MANAGER --------
+function loadManagerReimbursements() {
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('GET', 'managerReimburse.screen');
+    xhr.send();
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            APP_VIEW.innerHTML = xhr.responseText;
+            configureManageReimbursements();
+        }
+    }
+}
 
 
 
@@ -130,7 +144,6 @@ function configureHomeScreen() {
                 document.getElementById('toRegister').addEventListener('click', loadRegisterUser);
                 document.getElementById('toUpdate').addEventListener('click', loadUpdateUser);
                 document.getElementById('toManagerReimbursement').setAttribute('hidden', true);
-                document.getElementById('toEmployeeReimbursement').setAttribute('hidden', true);
                 document.getElementById('toNewReimbursement').setAttribute('hidden', true);
                 document.getElementById('toUpdateReimbursement').setAttribute('hidden', true);
 
@@ -139,7 +152,11 @@ function configureHomeScreen() {
             // MANAGER
             } else if (role == '2') {
                 console.log('manager page');
-                //document.getElementById('toManagerReimbursement').addEventListener('click', loadManagerReimbursements);
+                document.getElementById('toRegister').setAttribute('hidden', true);
+                document.getElementById('toUpdate').setAttribute('hidden', true);
+                document.getElementById('toManagerReimbursement').addEventListener('click', loadManagerReimbursements);
+                document.getElementById('toNewReimbursement').setAttribute('hidden', true);
+                document.getElementById('toUpdateReimbursement').setAttribute('hidden', true);
 
             // EMPLOYEE
             } else if (role == '3') {
@@ -147,7 +164,6 @@ function configureHomeScreen() {
                 document.getElementById('toRegister').setAttribute('hidden', true);
                 document.getElementById('toUpdate').setAttribute('hidden', true);
                 document.getElementById('toManagerReimbursement').setAttribute('hidden', true);
-                document.getElementById('toEmployeeReimbursement').setAttribute('hidden', true);
                 document.getElementById('toNewReimbursement').addEventListener('click', loadNewReimbursement);
                 document.getElementById('toUpdateReimbursement').addEventListener('click', loadUpdateReimbursement);
 
@@ -169,6 +185,11 @@ function configureUpdateScreen() {
 }
 
 //                   ------- MANAGER --------
+function configureManageReimbursements() {
+    populateManagerTable();
+    document.getElementById('AoD').addEventListener('click', approveOrDeny);
+    document.getElementById('back').addEventListener('click', backToDash);    
+}
 
 
 //                   ------- EMPLOYEE --------
@@ -307,9 +328,9 @@ function populateAdminTable() {
                     { data: 'role' },
                     { data: 'status'}
                 ]
-            } );
-        } else if (xhr.readyState == 4 && xhr.status != 200) {
-            console.log('something went wrong');
+            });
+        } else if (xhr.readyState == 4 && xhr.status == 503) {
+            console.log('The server is having trouple connecting right now...');
         }
     }
 }
@@ -347,16 +368,71 @@ function updateUser() {
         if (xhr.readyState == 4 && xhr.status == 202) {
             console.log('User updated!');
             loadUpdateUser();
-        } else if (xhr.readyState == 4 && xhr.status == 400) {
+        } else if (xhr.readyState == 4 && xhr.status == 503) {
             console.log('User failed to update...');
         }
     }
 }
 
 //                 --------- MANAGER OPS -------------
+function populateManagerTable() {
 
+    let xhr = new XMLHttpRequest();
 
+        xhr.open('GET', 'manager');
+        xhr.setRequestHeader('Content-type', 'application/json');
+        xhr.send();
 
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+
+                let userReimbursements = JSON.parse(xhr.responseText);
+                
+                $('#manager-reimbursements').DataTable( {
+                    data: userReimbursements,
+                    columns: [
+                        { data: 'id' },
+                        { data: 'amount' },
+                        { data: 'submitted' },
+                        { data: 'description' },
+                        { data: 'authorName' },
+                        { data: 'typeId' }
+                    ]
+                } );
+            } else if (xhr.readyState == 4 && xhr.status != 200) {
+                console.log('something went wrong');
+            }
+        }
+    
+}
+
+function approveOrDeny() {
+
+    let id = document.getElementById('id').value;
+    let stat = document.getElementById('answer').value;
+
+    let info = {
+        id: id,
+        statusId: stat
+    }
+
+    let approveOrDenyJSON = JSON.stringify(info);
+    //console.log(approveOrDenyJSON);
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('POST', 'manager');
+    xhr.send(approveOrDenyJSON);
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 202) {
+            console.log('Reimbursement has been approved or denied');
+            loadManagerReimbursements();
+        } else if (xhr.readyState == 4 && xhr.status == 400) {
+            console.log('Failed to approve or deny reimbursement');
+        }
+    }
+
+}
 
 
 //                --------- EMPLOYEE OPS -------------

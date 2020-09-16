@@ -14,11 +14,21 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ *  Creates a new Reimbursement to store in the server DB
+ */
 @WebServlet("/newReimburse")
 public class NewReimbursement extends HttpServlet {
 
     private final EmployeeService empService = new EmployeeService();
 
+    /**
+     * Creates new Reimbursement using JSON form data and the session user's Id
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

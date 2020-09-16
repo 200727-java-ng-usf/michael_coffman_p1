@@ -2,6 +2,9 @@ package com.revature.models;
 
 import java.util.Objects;
 
+/**
+ *  Generic user class. All users who interact with the system will be of AppUser type
+ */
 public class AppUser {
 
     private String firstName;

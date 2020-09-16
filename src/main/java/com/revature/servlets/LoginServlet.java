@@ -18,12 +18,22 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-
+/**
+ *  Takes in the login.html form data and authenticates the user. Will respond with a 401 status code
+ *  if the attempting user has been DEACTIVATED
+ */
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
     private final LoginService logService = new LoginService();
 
+    /**
+     * Invalidates the current session user
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setStatus(200);
@@ -31,6 +41,13 @@ public class LoginServlet extends HttpServlet {
 
     }
 
+    /**
+     * Authenticates the user and makes a server side session with their Id, username, and role
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

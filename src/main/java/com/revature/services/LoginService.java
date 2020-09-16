@@ -7,11 +7,20 @@ import com.revature.models.AppUser;
 
 import java.util.Optional;
 
+/**
+ *  Authenticates a user to start a session on the server.
+ */
 public class LoginService {
 
     private LoginDAO logDAO = new LoginDAO();
 
-    // Used for verifying username and password do exist, and redirect user to correct dashboard
+
+    /**
+     * Checks to see if the user exists in the server
+     * @param username
+     * @param password
+     * @return AppUser
+     */
     public AppUser authenticate(String username, String password) {
 
         if (username == null || username.trim().equals("") || password == null || password.trim().equals("")) {

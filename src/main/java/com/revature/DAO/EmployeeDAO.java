@@ -13,7 +13,11 @@ import java.util.Set;
 
 public class EmployeeDAO {
 
-
+    /**
+     * Submits a new reimbursement into the database.
+     * @param newReimburse
+     * @return boolean
+     */
     public boolean submitReimburse(Reimbursements newReimburse) {
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
@@ -39,6 +43,11 @@ public class EmployeeDAO {
         return false;
     }
 
+    /**
+     *  Updates an existing reimbursements specified by a user
+     * @param reimbursement
+     * @return boolean
+     */
     public boolean updateReimbursement(Reimbursements reimbursement) {
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
@@ -69,6 +78,11 @@ public class EmployeeDAO {
         return false;
     }
 
+    /**
+     *  Collects a Set of all reimbursements belonging to the currently logged-in user
+     * @param currentUser
+     * @return Set<Reimbursement>
+     */
     public Set<Reimbursements> currentUserReimbursements(Principal currentUser) {
 
         Set<Reimbursements> reimbursements = new HashSet<>();
@@ -90,13 +104,21 @@ public class EmployeeDAO {
             ResultSet results = statement.executeQuery();
             reimbursements = mapResultSet(results);
 
+            // Testing to make sure reimbursements are gathered as expected
+            // System.out.println(reimbursements);
+
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
         return reimbursements;
     }
 
-
+    /**
+     *  Maps the JDBC ResultSet into a Set<> of Reimbursement objects
+     * @param results
+     * @return Set<Reimbursement>
+     * @throws SQLException
+     */
     private Set<Reimbursements> mapResultSet(ResultSet results) throws SQLException {
 
         Set<Reimbursements> reimbursements = new HashSet<>();

@@ -19,9 +19,14 @@ public enum Status {
         this.statusName = statusName;
     }
 
+    /**
+     *  Sorts through JDBC ResultSet method for returning Status
+     * @param name
+     * @return Status
+     */
     public static Status getStatus(String name) {
         return Arrays.stream(Status.values())
-                .filter(status -> status.statusName.equals(name))
+                .filter(status -> status.statusName.equalsIgnoreCase((name)))
                 .findFirst()
                 .orElse(PENDING);
     }

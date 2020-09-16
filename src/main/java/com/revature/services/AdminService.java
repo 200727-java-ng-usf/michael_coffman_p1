@@ -7,10 +7,17 @@ import com.revature.models.AppUser;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ *  Encapsulates all the methods that an ADMIN user has access to.
+ */
 public class AdminService {
 
     private AdminDAO adDAO = new AdminDAO();
 
+    /**
+     * Registers a new user into the server
+     * @param newUser
+     */
     public void register(AppUser newUser) {
 
         // checking for valid credentials entered
@@ -28,6 +35,10 @@ public class AdminService {
         adDAO.save(newUser);
     }
 
+    /**
+     * Retrieves every user stored in the server.
+     * @return Set<AppUser>
+     */
     public Set<AppUser> getAllUsers() {
 
         Set<AppUser> users = adDAO.getAllUsers();
@@ -35,6 +46,11 @@ public class AdminService {
         return users;
     }
 
+    /**
+     * Updates the target user specified by an HttpRequest and returns a boolean for confirmation
+     * @param existingUser
+     * @return boolean
+     */
     public boolean updateUser(AppUser existingUser) {
         if (adDAO.updateUser(existingUser)) {
             return true;
@@ -42,6 +58,11 @@ public class AdminService {
         return false;
     }
 
+    /**
+     *  Checks to see if the credentials make sense, no null or spaced values
+     * @param user
+     * @return boolean
+     */
     public boolean isUserValid(AppUser user) {
         if (user == null) return false;
         if (user.getFirstName() == null || user.getFirstName().trim().equals("")) return false;

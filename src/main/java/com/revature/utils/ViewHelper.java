@@ -26,6 +26,9 @@ public class ViewHelper {
             case "/project1/updateReimburse.screen":
                 return "partials/updateReimburse.html";
 
+            case "/project1/managerReimburse.screen":
+                return "partials/managerReimburse.html";
+
             default:
                 return null;
 
