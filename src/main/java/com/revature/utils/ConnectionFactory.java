@@ -54,9 +54,9 @@ public class ConnectionFactory {
 
             // .properties file won't recognize url tag, and thinks the whole thing is null......
             conn = DriverManager.getConnection(
-                    properties.getProperty("url"),
-                    properties.getProperty("username"),
-                    properties.getProperty("password")
+                    "jdbc:postgresql://revature-training.cveu74hasekl.us-east-1.rds.amazonaws.com:5432/postgres",
+                    "postgres",
+                    "Ultimate1!"
             );
 
         } catch (ClassNotFoundException | SQLException e) {
