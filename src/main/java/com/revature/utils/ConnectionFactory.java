@@ -1,6 +1,8 @@
 package com.revature.utils;
 
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,12 +18,20 @@ public class ConnectionFactory {
 
     // Default Constructor
     private ConnectionFactory() {
-        super();
         try {
-//            properties.load(new FileReader("src/main/resources/application.properties"));
-            properties.load(getClass().getClassLoader().getResourceAsStream("application.properties"));
 
-        } catch (Exception e) {
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            InputStream propsInput = loader.getResourceAsStream("application.properties");
+
+            if (propsInput == null) {
+                properties.setProperty("url", System.getProperty("url"));
+                properties.setProperty("username", System.getProperty("username"));
+                properties.setProperty("password", System.getProperty("password"));
+            } else {
+                properties.load(propsInput);
+            }
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -39,24 +49,18 @@ public class ConnectionFactory {
      */
     public Connection getConnection() {
 
-        // Instantiates a Connection object to null to ensure
-        // the app is not already connected.
         Connection conn = null;
 
         try {
 
-            // This gets language specific driver; we are using PostGreSQL
+
             Class.forName("org.postgresql.Driver");
 
-            // This is DriverManager actually establishing the connection with
-            // the username and password we've set for our database. This is root
-            // user access
 
-            // .properties file won't recognize url tag, and thinks the whole thing is null......
             conn = DriverManager.getConnection(
-                    properties.getProperty("url"),
-                    properties.getProperty("username"),
-                    properties.getProperty("password")
+                    "jdbc:postgresql://revature-training.cveu74hasekl.us-east-1.rds.amazonaws.com:5432/postgres",
+                    "postgres",
+                    "Ultimate1!");
             );
 
         } catch (ClassNotFoundException | SQLException e) {
@@ -64,8 +68,17 @@ public class ConnectionFactory {
         }
 
         if (conn == null) {
-            throw new RuntimeException("Failed to establish connection THIS IS THE ERRROR HERERERERERE.");
+            try {
+                conn = DriverManager.getConnection(
+                        System.getenv("url"),
+                        System.getenv("username"),
+                        System.getenv("password")
+                );
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
         return conn;
     }
 
