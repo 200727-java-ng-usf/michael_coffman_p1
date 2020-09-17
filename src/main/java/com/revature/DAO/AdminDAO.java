@@ -124,10 +124,10 @@ public class AdminDAO {
         while (results.next()) {
             AppUser temp = new AppUser();
             temp.setId(results.getInt("ers_user_id"));
-            temp.setFirstName(results.getString("username"));
-            temp.setLastName(results.getString("password"));
-            temp.setUsername(results.getString("first_name"));
-            temp.setPassword(results.getString("last_name"));
+            temp.setFirstName(results.getString("first_name"));
+            temp.setLastName(results.getString("last_name"));
+            temp.setUsername(results.getString("username"));
+            temp.setPassword(results.getString("password"));
             temp.setEmail(results.getString("email"));
             temp.setRole(Role.getRoleName(results.getString("role_name")));
             temp.setStatus(results.getString("status"));
