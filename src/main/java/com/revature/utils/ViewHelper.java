@@ -12,25 +12,25 @@ public class ViewHelper {
                 return "/partials/login.html";
 
             case "/home.screen":
-                return "/project1/partials/home.html";
+                return "/partials/home.html";
 
             case "/register.screen":
-                return "/project1/partials/newUser.html";
+                return "/partials/newUser.html";
 
             case "/updateUser.screen":
-                return "/project1/partials/updateUser.html";
+                return "/partials/updateUser.html";
 
             case "/newReimburse.screen":
-                return "/project1/partials/newReimburse.html";
+                return "/partials/newReimburse.html";
 
             case "/allReimbursements.screen":
-                return "/project1/partials/allReimbursements.html";
+                return "/partials/allReimbursements.html";
 
             case "/updateReimburse.screen":
-                return "/project1/partials/updateReimburse.html";
+                return "/partials/updateReimburse.html";
 
             case "/managerReimburse.screen":
-                return "/project/partials/managerReimburse.html";
+                return "/partials/managerReimburse.html";
 
             default:
                 return null;
