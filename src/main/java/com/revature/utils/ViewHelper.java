@@ -30,7 +30,7 @@ public class ViewHelper {
                 return "/project1/partials/updateReimburse.html";
 
             case "/managerReimburse.screen":
-                return "/project1/partials/managerReimburse.html";
+                return "/project/partials/managerReimburse.html";
 
             default:
                 return null;
