@@ -9,7 +9,7 @@ public class ViewHelper {
         switch (req.getRequestURI()) {
 
             case "/login.screen":
-                return "/project1/partials/login.html";
+                return "/partials/login.html";
 
             case "/home.screen":
                 return "/project1/partials/home.html";
