@@ -6,3 +6,6 @@ out/
 # InteliJ specific files
 .idea/
 *.iml
+
+# Resource files
+/application.properties
