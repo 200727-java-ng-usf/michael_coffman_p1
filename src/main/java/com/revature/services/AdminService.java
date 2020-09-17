@@ -14,6 +14,7 @@ public class AdminService {
 
     private AdminDAO adDAO = new AdminDAO();
 
+
     /**
      * Registers a new user into the server
      * @param newUser
