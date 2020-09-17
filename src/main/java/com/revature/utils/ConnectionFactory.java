@@ -24,9 +24,9 @@ public class ConnectionFactory {
             InputStream propsInput = loader.getResourceAsStream("application.properties");
 
             if (propsInput == null) {
-                properties.setProperty("url", System.getenv("url"));
-                properties.setProperty("username", System.getenv("username"));
-                properties.setProperty("password", System.getenv("password"));
+                properties.setProperty("url", System.getProperty("url"));
+                properties.setProperty("username", System.getProperty("username"));
+                properties.setProperty("password", System.getProperty("password"));
             } else {
                 properties.load(propsInput);
             }
@@ -49,20 +49,14 @@ public class ConnectionFactory {
      */
     public Connection getConnection() {
 
-        // Instantiates a Connection object to null to ensure
-        // the app is not already connected.
         Connection conn = null;
 
         try {
 
-            // This gets language specific driver; we are using PostGreSQL
+
             Class.forName("org.postgresql.Driver");
 
-            // This is DriverManager actually establishing the connection with
-            // the username and password we've set for our database. This is root
-            // user access
 
-            // .properties file won't recognize url tag, and thinks the whole thing is null......
             conn = DriverManager.getConnection(
                     properties.getProperty("url"),
                     properties.getProperty("username"),
@@ -74,8 +68,17 @@ public class ConnectionFactory {
         }
 
         if (conn == null) {
-            throw new RuntimeException("Failed to establish connection THIS IS THE ERRROR HERERERERERE.");
+            try {
+                conn = DriverManager.getConnection(
+                        System.getenv("url"),
+                        System.getenv("username"),
+                        System.getenv("password")
+                );
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
         return conn;
     }
 
