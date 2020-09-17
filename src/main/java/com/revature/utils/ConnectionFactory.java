@@ -1,6 +1,8 @@
 package com.revature.utils;
 
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,12 +18,20 @@ public class ConnectionFactory {
 
     // Default Constructor
     private ConnectionFactory() {
-        super();
         try {
-//            properties.load(new FileReader("src/main/resources/application.properties"));
-            properties.load(getClass().getClassLoader().getResourceAsStream("application.properties"));
 
-        } catch (Exception e) {
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            InputStream propsInput = loader.getResourceAsStream("application.properties");
+
+            if (propsInput == null) {
+                properties.setProperty("url", System.getenv("url"));
+                properties.setProperty("username", System.getenv("username"));
+                properties.setProperty("password", System.getenv("password"));
+            } else {
+                properties.load(propsInput);
+            }
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
