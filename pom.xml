@@ -64,7 +64,7 @@
                     <configuration>
                         <url>http://localhost:8080/manager/text</url>
                         <server>LocalTomcat</server>
-                        <path>/project1</path>
+                        <path></path>
                         <update>true</update>
                     </configuration>
                 </plugin>

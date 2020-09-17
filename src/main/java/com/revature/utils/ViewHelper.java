@@ -8,28 +8,28 @@ public class ViewHelper {
 
         switch (req.getRequestURI()) {
 
-            case "/project1/login.screen":
+            case "/login.screen":
                 return "partials/login.html";
 
-            case "/project1/home.screen":
+            case "/home.screen":
                 return "partials/home.html";
 
-            case "/project1/register.screen":
+            case "/register.screen":
                 return "partials/newUser.html";
 
-            case "/project1/updateUser.screen":
+            case "/updateUser.screen":
                 return "partials/updateUser.html";
 
-            case "/project1/newReimburse.screen":
+            case "/newReimburse.screen":
                 return "partials/newReimburse.html";
 
-            case "/project1/allReimbursements.screen":
+            case "/allReimbursements.screen":
                 return "partials/allReimbursements.html";
 
-            case "/project1/updateReimburse.screen":
+            case "/updateReimburse.screen":
                 return "partials/updateReimburse.html";
 
-            case "/project1/managerReimburse.screen":
+            case "/managerReimburse.screen":
                 return "partials/managerReimburse.html";
 
             default:
